@@ -27,7 +27,7 @@ table. It is also what you get by opening `index.html` locally.
 | **Peak ascent rate** | 6.6 m/s (2 min window) |
 | **Max GPS satellites locked** | 18 |
 | **Photos triggered** | 693 |
-| **Launch** | 49.2326 °N, 0.0935 °E — Bonnebosq (14), 2026-10-04 08:12 UTC |
+| **Launch** | Bonnebosq (14), Normandy — 2026-10-04 08:12 UTC |
 | **Landing** | Livarot Pays d'Auge (14) |
 | **Launch weather** | clear sky, 12.5 °C, RH 86 %, 1011 hPa, NE 3.6 km/h |
 
@@ -41,13 +41,19 @@ table. It is also what you get by opening `index.html` locally.
 | Camera | ESP32-CAM (OV2640, UXGA JPEG, 120° / 75 mm lens) |
 | Storage | 2 × SanDisk Extreme Pro 128 GB (one per MCU) |
 | Recovery | StratoFinder GSM tracker |
-| Power | 4 × Energizer Ultimate Lithium AA |
+| Power | 1 × Sony VTC6 18650 Li-Ion (3.7 V nominal, 3000 mAh) |
 | Balloon / parachute | Stratoflights 1000 g kit, 2.6 m³ helium |
 
-Everything is wired on a single hand-soldered proto board. Full build notes
-and the Arduino sketches that produced this flight live upstream in the
-author's hardware project — this repo captures only what the flight itself
-produced.
+Everything is wired on a single hand-soldered proto board. The exact
+Arduino and ESP32 firmware that produced this flight is in
+[`sketches/`](sketches/):
+
+- [`sketches/balloon_datalog/`](sketches/balloon_datalog/) — Pro Mini 1 Hz logger, state machine, camera triggering
+- [`sketches/balloon_cam/`](sketches/balloon_cam/) — ESP32-CAM capture (WiFi/BT disabled to protect the GPS)
+- [`sketches/led_test/`](sketches/led_test/) — bench-only LED sanity check
+
+A printable LED cheat-sheet (`led_guide.pdf`) sits at the repo root for
+field reference.
 
 ## Repository contents
 
@@ -56,7 +62,7 @@ produced.
 ├── index.html          ← full self-contained flight report (GitHub Pages entrypoint)
 ├── summary.png         ← one-glance dashboard (KPIs + 4 micro-plots)
 ├── FLIGHT.CSV          ← raw 1 Hz telemetry, 10 014 rows × 15 columns
-├── highlights.txt      ← curated list of 12 photos shown in the report gallery
+├── led_guide.pdf       ← printable 10 × 10 cm field reference for the status LEDs
 ├── plot/               ← every chart referenced by the report
 │   ├── plot_altitude_dual.png   (BMP180 vs GPS end-to-end)
 │   ├── plot_ascent_rate.png     (vertical rate, 2 min window)
@@ -70,6 +76,10 @@ produced.
 │   ├── plot_sample_rate.png
 │   └── plot_state.png           (12-state flight-state progression)
 ├── camera/             ← the 12 highlighted photos from the 693-image set
+├── sketches/           ← flight firmware (Arduino + ESP32)
+│   ├── balloon_datalog/   Pro Mini 1 Hz logger + state machine + camera trigger
+│   ├── balloon_cam/       ESP32-CAM UXGA capture on external trigger
+│   └── led_test/          Bench sketch to validate the three status LEDs
 └── README.md
 ```
 
