@@ -7,9 +7,7 @@ balloon, apex at **32,422 m** (verified GPS), landed near **Livarot
 Pays d'Auge (14)** 2 h 47 min later.  693 photos captured, 10 014 rows of
 1 Hz telemetry logged, zero dropped samples.
 
-![Flight summary](summary.png)
-
-## 👉 [Open the full flight report](https://nelsonsteinmetz.github.io/HABFlight-SSP-001/)
+#### 🔗 [Open the full flight report](https://nelsonsteinmetz.github.io/HABFlight-SSP-001/)
 
 The report is a single self-contained page: KPIs, launch weather, 12
 curated camera highlights, every sensor plot with phase shading and 10 km
@@ -42,17 +40,20 @@ table. It is also what you get by opening `index.html` locally.
 | Storage | 2 × SanDisk Extreme Pro 128 GB (one per MCU) |
 | Recovery | StratoFinder GSM tracker |
 | Power | 1 × Sony VTC6 18650 Li-Ion (3.7 V nominal, 3000 mAh) |
-| Balloon / parachute | Stratoflights 1000 g kit, 2.6 m³ helium |
+| Balloon / parachute | Stratoflights 800 kit, 2.6 m³ helium |
 
 Everything is wired on a single hand-soldered proto board. The exact
 Arduino and ESP32 firmware that produced this flight is in
 [`sketches/`](sketches/):
 
+
+![Soldered Board](soldered-board.png)
+
 - [`sketches/balloon_datalog/`](sketches/balloon_datalog/) — Pro Mini 1 Hz logger, state machine, camera triggering
 - [`sketches/balloon_cam/`](sketches/balloon_cam/) — ESP32-CAM capture (WiFi/BT disabled to protect the GPS)
 - [`sketches/led_test/`](sketches/led_test/) — bench-only LED sanity check
 
-A printable LED cheat-sheet (`led_guide.pdf`) sits at the repo root for
+A printable LED cheat-sheet (`led_guide.pdf`) lives next to the sketches directory for
 field reference.
 
 ## Repository contents
@@ -113,11 +114,14 @@ field reference.
 
 ## Methodology
 
-The flight-report page is rendered by `analyze.py` (upstream) from the raw
-CSV plus `highlights.txt`. All curves live in the `plot/` folder as PNG;
-the 3D trajectory also exists as a 4 s GIF loop and a 10 s H.264 clip.
-Launch weather is fetched from Open-Meteo at render time; cached HTML is
-captured in this repo.
+The flight-report page is rendered by `analyze.py` (upstream) directly
+from `FLIGHT.CSV`. All curves live in the `plot/` folder as PNG; the 3D
+trajectory also exists as a 4 s GIF loop and a 10 s H.264 clip. Launch
+weather is fetched from Open-Meteo at render time; the resulting HTML is
+cached in this repo so GitHub Pages serves it without any build step.
+
+The 12 photos surfaced in the gallery were curated by hand from the full
+693-image set; the picks are embedded directly in `index.html`.
 
 Click any plot in the report to open a full-screen lightbox. Diagnostic
 sections (State machine, Sample interval) start collapsed so the headline
