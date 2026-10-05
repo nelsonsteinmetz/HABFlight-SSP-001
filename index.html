@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HAB Flight SSP-001 — Bonnebosq → Livarot</title>
+  <meta name="description" content="High-altitude balloon flight to 32,422 m. Bonnebosq → Livarot, 2026-10-04. Full telemetry, animated 3D trajectory, 12 curated space photos.">
+  <meta property="og:title" content="HAB Flight SSP-001 — 32 km over Normandy">
+  <meta property="og:description" content="Max altitude 32 422 m. 2 h 47 duration. 693 photos. Full flight report with sensor plots and 3D trajectory.">
+  <meta property="og:image" content="summary.png">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <style>
+    :root {
+      --bg: #f5f7fa;
+      --card: #ffffff;
+      --text: #111827;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --accent: #2563eb;
+      --good: #059669;
+      --warn: #d97706;
+      --bad:  #dc2626;
+      --radius: 14px;
+      --shadow: 0 1px 2px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
+    }
+    * { box-sizing: border-box; }
+    html { color-scheme: light; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter",
+                   Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 40px 24px 64px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 1180px; margin: 0 auto; }
+    .eyebrow {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    h1 { font-size: 34px; font-weight: 700; margin: 0 0 6px; letter-spacing: -0.02em; }
+    .subtitle { color: var(--muted); font-size: 14px; margin: 0 0 32px; }
+    code {
+      background: #eef2f7;
+      padding: 2px 6px;
+      border-radius: 5px;
+      font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 0.88em;
+      color: #334155;
+    }
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .kpi {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 22px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      position: relative;
+      overflow: hidden;
+    }
+    .kpi::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--accent);
+      opacity: 0.9;
+    }
+    .kpi.good::before { background: var(--good); }
+    .kpi.warn::before { background: var(--warn); }
+    .kpi.bad::before  { background: var(--bad); }
+    .kpi .label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .kpi .value {
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--text);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.01em;
+      line-height: 1.15;
+    }
+    .kpi .sub {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    section.card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
+    }
+    section.card h2 {
+      margin: 0 0 4px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    section.card h2 + .card-subtitle {
+      margin: 0 0 18px;
+      color: var(--text);
+      font-size: 18px;
+      font-weight: 600;
+    }
+    table.metrics {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    table.metrics tr { border-bottom: 1px solid var(--border); }
+    table.metrics tr:last-child { border-bottom: none; }
+    table.metrics tr.section th {
+      padding-top: 24px;
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    abbr[title] {
+      text-decoration: underline dotted;
+      text-decoration-color: var(--muted);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+      cursor: help;
+    }
+    table.metrics th, table.metrics td {
+      padding: 12px 0;
+      text-align: left;
+      font-size: 14px;
+      vertical-align: top;
+    }
+    table.metrics th {
+      color: var(--muted);
+      font-weight: 500;
+      width: 42%;
+    }
+    table.metrics td {
+      color: var(--text);
+      font-variant-numeric: tabular-nums;
+      font-weight: 500;
+    }
+    .plots-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    .plot-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .plot-card > summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      user-select: none;
+    }
+    .plot-card > summary::-webkit-details-marker { display: none; }
+    .plot-card > summary::before {
+      content: "";
+      display: inline-block;
+      width: 7px; height: 7px;
+      border-right: 1.6px solid var(--muted);
+      border-bottom: 1.6px solid var(--muted);
+      transform: rotate(-45deg);
+      transition: transform 0.15s ease;
+      margin-right: 2px;
+    }
+    .plot-card[open] > summary::before { transform: rotate(45deg); }
+    .plot-card:hover > summary { background: #f9fafb; }
+    .plot-card h3 {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      display: inline;
+    }
+    .plot-body {
+      padding: 0 24px 22px;
+    }
+    .plot-card img {
+      display: block;
+      max-width: 100%;
+      max-height: 520px;
+      width: auto;
+      height: auto;
+      margin: 0 auto;
+      border-radius: 8px;
+      background: #fafafa;
+      object-fit: contain;
+      cursor: zoom-in;
+      transition: filter 0.15s ease;
+    }
+    .plot-card img:hover { filter: brightness(1.03); }
+    /* 3D trajectory GIF — taller because the aspect ratio is near-square. */
+    .plot-card img[src$=".gif"] { max-height: 728px; }
+
+    /* Fullscreen modal viewer for click-to-expand. */
+    #img-modal {
+      position: fixed; inset: 0;
+      background: rgba(10, 14, 20, 0.92);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+      z-index: 1000;
+      cursor: zoom-out;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+    #img-modal.open { display: flex; }
+    #img-modal img {
+      max-width: 100%;
+      max-height: 100%;
+      border-radius: 8px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+      cursor: default;
+    }
+    #img-modal-close {
+      position: absolute;
+      top: 20px; right: 24px;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+      color: white;
+      border: 0;
+      font-size: 20px;
+      line-height: 1;
+      cursor: pointer;
+    }
+    #img-modal-close:hover { background: rgba(255,255,255,0.22); }
+    .plot-card .caption {
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 12px;
+    }
+    a.photo {
+      display: block;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #fafafa;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    a.photo:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+    }
+    a.photo img {
+      display: block;
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      background: #f0f2f5;
+    }
+    .photo-caption {
+      padding: 8px 10px;
+      font-size: 11.5px;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+    footer {
+      margin-top: 40px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    @media (max-width: 640px) {
+      body { padding: 24px 14px 40px; }
+      h1 { font-size: 26px; }
+      .kpi .value { font-size: 26px; }
+      section.card, .plot-card { padding: 18px; }
+    }
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="eyebrow">Flight Report</div>
+    <h1>HAB Flight SSP-001</h1>
+    <p class="subtitle">
+      Source: <a href="FLIGHT.CSV" download><code>FLIGHT.CSV</code></a>
+      &nbsp;·&nbsp; Generated 2026-10-05 22:19
+    </p>
+
+    <div class="kpi-grid">
+      <div class="kpi ">
+        <div class="label">Duration</div>
+        <div class="value">2:47:02</div>
+        <div class="sub">10,014 samples</div>
+      </div>
+      <div class="kpi ">
+        <div class="label">Max altitude</div>
+        <div class="value">32,422 m</div>
+        <div class="sub">from gps_alt_m</div>
+      </div>
+      <div class="kpi good">
+        <div class="label">Peak ascent rate</div>
+        <div class="value">6.6 m/s</div>
+        <div class="sub">10 s rolling average</div>
+      </div>
+      <div class="kpi ">
+        <div class="label">Photos triggered</div>
+        <div class="value">693</div>
+        <div class="sub">camera pulses</div>
+      </div>
+    </div>
+
+    <section class="card">
+      <h2>Captures</h2>
+      <div class="card-subtitle">Camera highlights across the flight</div>
+      <div class="photo-grid">
+      <a class="photo" href="camera/img_000013.jpg" target="_blank">
+        <img src="camera/img_000013.jpg" alt="img_000013.jpg" loading="lazy">
+        <div class="photo-caption">t = 0:38 &nbsp;·&nbsp; 1 · ARMED_GROUND &nbsp;·&nbsp; img_000013.jpg</div>
+      </a>
+      <a class="photo" href="camera/img_000024.jpg" target="_blank">
+        <img src="camera/img_000024.jpg" alt="img_000024.jpg" loading="lazy">
+        <div class="photo-caption">t = 1:11 &nbsp;·&nbsp; 1 · ARMED_GROUND &nbsp;·&nbsp; img_000024.jpg</div>
+      </a>
+      <a class="photo" href="camera/img_000028.jpg" target="_blank">
+        <img src="camera/img_000028.jpg" alt="img_000028.jpg" loading="lazy">
+        <div class="photo-caption">t = 1:23 &nbsp;·&nbsp; 1 · ARMED_GROUND &nbsp;·&nbsp; img_000028.jpg</div>
+      </a>
+      <a class="photo" href="camera/img_000059.jpg" target="_blank">
+        <img src="camera/img_000059.jpg" alt="img_000059.jpg" loading="lazy">
+        <div class="photo-caption">t = 2:27 &nbsp;·&nbsp; 2 · ASCENT_1 &nbsp;·&nbsp; img_000059.jpg</div>
+      </a>
+      <a class="photo" href="camera/img_000168.jpg" target="_blank">
+        <img src="camera/img_000168.jpg" alt="img_000168.jpg" loading="lazy">
+        <div class="photo-caption">t = 15:45 &nbsp;·&nbsp; 5 · ASCENT_4 &nbsp;·&nbsp; img_000168.jpg</div>
+      </a>
+      <a class="photo" href="camera/img_000275.jpg" target="_blank">
+        <img src="camera/img_000275.jpg" alt="img_000275.jpg" loading="lazy">
+        <div class="photo-caption">t = 1:17:57 &nbsp;·&nbsp; 7 · ASCENT_6 &nbsp;·&nbsp; img_000275.jpg</div>
+      </a>
+      <a class="photo" href="camera/img_000296.jpg" target="_blank">
+        <img src="camera/img_000296.jpg" alt="img_000296.jpg" loading="lazy">
+        <div class="photo-caption">t = 1:25:04 &nbsp;·&nbsp; 7 · ASCENT_6 &nbsp;·&nbsp; img_000296.jpg</div>
+      </a>
+      <a class="photo" href="camera/img_000316.jpg" target="_blank">
+        <img src="camera/img_000316.jpg" alt="img_000316.jpg" loading="lazy">
+        <div class="photo-caption">t = 1:31:49 &nbsp;·&nbsp; 7 · ASCENT_6 &nbsp;·&nbsp; img_000316.jpg</div>
+      </a>
+      <a class="photo" href="camera/img_000324.jpg" target="_blank">
+        <img src="camera/img_000324.jpg" alt="img_000324.jpg" loading="lazy">
+        <div class="photo-caption">t = 1:34:34 &nbsp;·&nbsp; 7 · ASCENT_6 &nbsp;·&nbsp; img_000324.jpg</div>
+      </a>
+      <a class="photo" href="camera/img_000327.jpg" target="_blank">
+        <img src="camera/img_000327.jpg" alt="img_000327.jpg" loading="lazy">
+        <div class="photo-caption">t = 1:35:35 &nbsp;·&nbsp; 7 · ASCENT_6 &nbsp;·&nbsp; img_000327.jpg</div>
+      </a>
+      <a class="photo" href="camera/img_000381.jpg" target="_blank">
+        <img src="camera/img_000381.jpg" alt="img_000381.jpg" loading="lazy">
+        <div class="photo-caption">t = 1:52:53 &nbsp;·&nbsp; 8 · BURST &nbsp;·&nbsp; img_000381.jpg</div>
+      </a>
+      <a class="photo" href="camera/img_000622.jpg" target="_blank">
+        <img src="camera/img_000622.jpg" alt="img_000622.jpg" loading="lazy">
+        <div class="photo-caption">t = 2:35:09 &nbsp;·&nbsp; 9 · DESCENT_1 &nbsp;·&nbsp; img_000622.jpg</div>
+      </a>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Visualisation</h2>
+      <div class="card-subtitle">Sensor traces and trajectory</div>
+      <div class="plots-grid">
+    <details class="plot-card" open>
+      <summary><h3>Altitude</h3></summary>
+      <div class="plot-body">
+        <img src="plot/plot_altitude_dual.png" alt="Altitude" loading="lazy">
+        <p class="caption">BMP180 (blue) assumes a standard atmosphere and diverges above ~9 km; GPS (orange) is <abbr title="Mean sea-level pressure (altimeter setting)">QNH</abbr>-independent and accurate end-to-end. Background bands: ASCENT (green), BURST (orange), DESCENT (blue). The slope at any point is the vertical rate — see the Ascent / descent rate plot for a smoothed numeric view.</p>
+      </div>
+    </details>
+    <details class="plot-card" open>
+      <summary><h3>Ascent / descent rate</h3></summary>
+      <div class="plot-body">
+        <img src="plot/plot_ascent_rate.png" alt="Ascent / descent rate" loading="lazy">
+        <p class="caption">Vertical speed smoothed with a 60 s rolling median. Typical <abbr title="High-Altitude Balloon">HAB</abbr>: steady 5-7 m/s ascent, sharp dive to 20-30 m/s right after burst (parachute barely catches in near-vacuum), then gradual slowing as the chute bites in thicker air.</p>
+      </div>
+    </details>
+    <details class="plot-card" open>
+      <summary><h3>Temperature</h3></summary>
+      <div class="plot-body">
+        <img src="plot/plot_temperature.png" alt="Temperature" loading="lazy">
+        <p class="caption">Inside-payload temperature. Follows the ambient profile: warm near the ground, cold trough through the tropopause (−40 to −55 °C around 10-15 km), slight warming climbing into the stratosphere.</p>
+      </div>
+    </details>
+    <details class="plot-card" open>
+      <summary><h3>Pressure</h3></summary>
+      <div class="plot-body">
+        <img src="plot/plot_pressure.png" alt="Pressure" loading="lazy">
+        <p class="caption">Raw BMP180 pressure. Falls roughly exponentially — half of sea-level at ~5.5 km, 10 % at 16 km, below 1 % above 30 km. BMP180's range runs out around 9 km, so values above are noisy and shouldn't be trusted.</p>
+      </div>
+    </details>
+    <details class="plot-card" open>
+      <summary><h3>Ground track</h3></summary>
+      <div class="plot-body">
+        <img src="plot/plot_track_satellite.png" alt="Ground track" loading="lazy">
+        <p class="caption">Flight path on <abbr title="Environmental Systems Research Institute (ArcGIS tile provider)">ESRI</abbr> World Imagery, coloured by altitude (km). Green = launch, red = last fix. Top-5 nearby cities labelled for scale; the altitude colourbar is on the right.</p>
+      </div>
+    </details>
+    <details class="plot-card" open>
+      <summary><h3>3D trajectory over satellite floor</h3></summary>
+      <div class="plot-body">
+        <img src="plot/plot_track_3d.gif" alt="3D trajectory over satellite floor" loading="lazy">
+        <p class="caption">3D flight path with <abbr title="Environmental Systems Research Institute (ArcGIS tile provider)">ESRI</abbr> imagery as the ground plane. XY = km east/north from first fix, Z = altitude (km). Animation sweeps 90° and back every 4 s; a static PNG and a 10 s 60 fps MP4 sit alongside.</p>
+      </div>
+    </details>
+    <details class="plot-card" open>
+      <summary><h3>GPS satellites</h3></summary>
+      <div class="plot-body">
+        <img src="plot/plot_gps_health.png" alt="GPS satellites" loading="lazy">
+        <p class="caption">Satellites used in the position solution. 6+ is the sketch's 'good fix' threshold; more generally means tighter accuracy. Sudden drops to 0 point to antenna shadowing, <abbr title="Electromagnetic Interference">EMI</abbr>, or fast rotation masking the sky.</p>
+      </div>
+    </details>
+    <details class="plot-card">
+      <summary><h3>Sample interval</h3></summary>
+      <div class="plot-body">
+        <img src="plot/plot_sample_rate.png" alt="Sample interval" loading="lazy">
+        <p class="caption">Time between consecutive CSV rows. Target is 1000 ms. Small spikes = SD write latency; sustained drift = SoftwareSerial buffer pressure. Values above ~1050 ms mean a sample was delayed but not dropped.</p>
+      </div>
+    </details>
+    <details class="plot-card">
+      <summary><h3>State machine progression</h3></summary>
+      <div class="plot-body">
+        <img src="plot/plot_state.png" alt="State machine progression" loading="lazy">
+        <p class="caption">Flight state 0-12. 0 = WAITING, 1 = ARMED_GROUND, 2-7 = ASCENT bands, 8 = BURST, 9-11 = DESCENT bands, 12 = LANDED. Smooth stairway = clean mission; sawtooth = jumper toggles or burst-detection oscillation.</p>
+      </div>
+    </details>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Detail</h2>
+      <div class="card-subtitle">Full run metrics</div>
+      <table class="metrics">
+      <tr><th>Samples</th><td>10,014</td></tr>
+      <tr><th>Duration</th><td>10022.0 s (167.0 min)</td></tr>
+      <tr><th>Sample ID range</th><td>1 → 10,014</td></tr>
+      <tr><th>Dropped samples</th><td>0</td></tr>
+      <tr><th>Altitude range (gps_alt_m)</th><td>139.2 → 32422.4 m</td></tr>
+      <tr><th>Temperature range</th><td>-19.2 → 23.7 °C</td></tr>
+      <tr><th>Pressure range</th><td>12.8 → 1014.3 hPa</td></tr>
+      <tr><th>Time to first GPS fix</th><td>0 s</td></tr>
+      <tr><th>GPS fixes</th><td>10,014 / 10,014 rows</td></tr>
+      <tr><th>Max sats</th><td>18</td></tr>
+      <tr><th>Sample Δt median</th><td>1001 ms</td></tr>
+      <tr><th>Sample Δt max</th><td>1016 ms</td></tr>
+      <tr><th>States reached</th><td>1 ARMED_GROUND, 2 ASCENT_1, 3 ASCENT_2, 4 ASCENT_3, 5 ASCENT_4, 6 ASCENT_5, 7 ASCENT_6, 8 BURST, 9 DESCENT_1, 10 DESCENT_2</td></tr>
+      <tr><th>Photos triggered</th><td>693</td></tr>
+      <tr class="section"><th colspan="2">Launch conditions</th></tr>
+      <tr><th>Launch location</th><td>49.2326 °N, 0.0935 °E</td></tr>
+      <tr><th>Launch time (<abbr title="Coordinated Universal Time">UTC</abbr>)</th><td>2026-10-04 08:12</td></tr>
+      <tr><th>Weather</th><td>clear sky</td></tr>
+      <tr><th>Air temperature (2 m <abbr title="Above Ground Level">AGL</abbr>)</th><td>12.5 °C</td></tr>
+      <tr><th>Relative humidity (<abbr title="Relative humidity">RH</abbr>)</th><td>86 %</td></tr>
+      <tr><th>Surface pressure</th><td>1011.2 hPa</td></tr>
+      <tr><th>Wind (10 m <abbr title="Above Ground Level">AGL</abbr>)</th><td>3.6 km/h from <abbr title="Northeast">NE</abbr> (37°)</td></tr>
+      <tr><th>Cloud cover</th><td>0 %</td></tr>
+      <tr><th>Precipitation (1 h)</th><td>0.0 mm</td></tr>
+      </table>
+    </section>
+
+    <footer>Generated by <code>analyze.py</code> · balloon_datalog</footer>
+  </div>
+
+  <div id="img-modal" role="dialog" aria-modal="true" aria-label="Expanded image">
+    <button id="img-modal-close" aria-label="Close">×</button>
+    <img id="img-modal-img" alt="">
+  </div>
+  <script>
+    (function () {
+      var modal = document.getElementById('img-modal');
+      var modalImg = document.getElementById('img-modal-img');
+      var closeBtn = document.getElementById('img-modal-close');
+      function open(src, alt) {
+        modalImg.src = src;
+        modalImg.alt = alt || '';
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+      function close() {
+        modal.classList.remove('open');
+        modalImg.src = '';
+        document.body.style.overflow = '';
+      }
+      modal.addEventListener('click', function (e) {
+        if (e.target === modal || e.target === closeBtn) close();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && modal.classList.contains('open')) close();
+      });
+      document.querySelectorAll('.plot-card img').forEach(function (img) {
+        img.addEventListener('click', function () {
+          open(img.src, img.alt);
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

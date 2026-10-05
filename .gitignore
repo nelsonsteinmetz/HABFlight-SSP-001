@@ -1,0 +1,9 @@
+# macOS
+.DS_Store
+._.DS_Store
+
+# Editor / local temp
+.vscode/
+.idea/
+*.swp
+*~

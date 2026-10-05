@@ -1,0 +1,20 @@
+# Pinned camera highlights for the report gallery.
+# One photo per line, either by filename (img_000013.jpg) or by numeric id (13).
+# Lines starting with # are ignored. Order preserved in rendering (then by t_s).
+#
+# Launch field pre-release:
+img_000013.jpg
+img_000024.jpg
+img_000028.jpg
+# Climb — Normandy ground track:
+img_000059.jpg
+img_000168.jpg
+# Near-space highlights:
+img_000275.jpg
+img_000296.jpg
+img_000316.jpg
+img_000324.jpg
+img_000327.jpg
+img_000381.jpg
+# Descent — payload swinging under parachute:
+img_000622.jpg
