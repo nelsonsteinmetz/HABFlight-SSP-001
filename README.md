@@ -51,7 +51,6 @@ Arduino and ESP32 firmware that produced this flight is in
 
 - [`sketches/balloon_datalog/`](sketches/balloon_datalog/) — Pro Mini 1 Hz logger, state machine, camera triggering
 - [`sketches/balloon_cam/`](sketches/balloon_cam/) — ESP32-CAM capture (WiFi/BT disabled to protect the GPS)
-- [`sketches/led_test/`](sketches/led_test/) — bench-only LED sanity check
 
 A printable LED cheat-sheet (`led_guide.pdf`) lives next to the sketches directory for
 field reference.
