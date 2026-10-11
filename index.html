@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      data-title-en="HAB Flight SSP-001 — Bonnebosq → Livarot"
+      data-title-fr="Vol HAB SSP-001 — Bonnebosq → Livarot">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -303,6 +305,36 @@
       color: var(--muted);
       font-size: 12px;
     }
+    /* Bilingual content: each translatable string is a pair of spans,
+       .lang-en / .lang-fr. Only the active language is displayed. */
+    html[lang="fr"] .lang-en { display: none; }
+    html:not([lang="fr"]) .lang-fr { display: none; }
+    .lang-switch {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 60;
+      display: flex;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+      background: var(--card);
+      box-shadow: var(--shadow);
+    }
+    .lang-switch button {
+      border: 0;
+      background: transparent;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .lang-switch button.active {
+      background: var(--accent);
+      color: #fff;
+    }
     @media (max-width: 640px) {
       body { padding: 24px 14px 40px; }
       h1 { font-size: 26px; }
@@ -312,40 +344,46 @@
 </style>
 </head>
 <body>
+  <div class="lang-switch" role="group" aria-label="Language / Langue">
+    <button type="button" data-lang="en" class="active">EN</button>
+    <button type="button" data-lang="fr">FR</button>
+  </div>
   <div class="container">
-    <div class="eyebrow">Flight Report</div>
+    <div class="eyebrow"><span class="lang-en">Flight Report</span><span class="lang-fr">Rapport de vol</span></div>
     <h1>HAB Flight SSP-001</h1>
     <p class="subtitle">
-      Source: <a href="FLIGHT.CSV" download><code>FLIGHT.CSV</code></a>
-      &nbsp;·&nbsp; Generated 2026-10-05 22:19
+      <span class="lang-en">Source: <a href="FLIGHT.CSV" download><code>FLIGHT.CSV</code></a>
+      &nbsp;·&nbsp; Generated 2026-10-11 14:02</span>
+      <span class="lang-fr">Source&nbsp;: <a href="FLIGHT.CSV" download><code>FLIGHT.CSV</code></a>
+      &nbsp;·&nbsp; Généré le 2026-10-11 14:02</span>
     </p>
 
     <div class="kpi-grid">
       <div class="kpi ">
-        <div class="label">Duration</div>
+        <div class="label"><span class="lang-en">Duration</span><span class="lang-fr">Durée</span></div>
         <div class="value">2:47:02</div>
-        <div class="sub">10,014 samples</div>
+        <div class="sub"><span class="lang-en">10,014 samples</span><span class="lang-fr">10,014 échantillons</span></div>
       </div>
       <div class="kpi ">
-        <div class="label">Max altitude</div>
+        <div class="label"><span class="lang-en">Max altitude</span><span class="lang-fr">Altitude max</span></div>
         <div class="value">32,422 m</div>
-        <div class="sub">from gps_alt_m</div>
+        <div class="sub"><span class="lang-en">from gps_alt_m</span><span class="lang-fr">d'après gps_alt_m</span></div>
       </div>
       <div class="kpi good">
-        <div class="label">Peak ascent rate</div>
+        <div class="label"><span class="lang-en">Peak ascent rate</span><span class="lang-fr">Vitesse de montée max</span></div>
         <div class="value">6.6 m/s</div>
-        <div class="sub">10 s rolling average</div>
+        <div class="sub"><span class="lang-en">10 s rolling average</span><span class="lang-fr">moyenne glissante 10 s</span></div>
       </div>
       <div class="kpi ">
-        <div class="label">Photos triggered</div>
+        <div class="label"><span class="lang-en">Photos triggered</span><span class="lang-fr">Photos déclenchées</span></div>
         <div class="value">693</div>
-        <div class="sub">camera pulses</div>
+        <div class="sub"><span class="lang-en">camera pulses</span><span class="lang-fr">impulsions caméra</span></div>
       </div>
     </div>
 
     <section class="card">
-      <h2>Captures</h2>
-      <div class="card-subtitle">Camera highlights across the flight</div>
+      <h2><span class="lang-en">Captures</span><span class="lang-fr">Photos</span></h2>
+      <div class="card-subtitle"><span class="lang-en">Camera highlights across the flight</span><span class="lang-fr">Sélection de photos prises pendant le vol</span></div>
       <div class="photo-grid">
       <a class="photo" href="camera/img_000013.jpg" target="_blank">
         <img src="camera/img_000013.jpg" alt="img_000013.jpg" loading="lazy">
@@ -399,107 +437,107 @@
     </section>
 
     <section class="card">
-      <h2>Visualisation</h2>
-      <div class="card-subtitle">Sensor traces and trajectory</div>
+      <h2><span class="lang-en">Visualisation</span><span class="lang-fr">Visualisations</span></h2>
+      <div class="card-subtitle"><span class="lang-en">Sensor traces and trajectory</span><span class="lang-fr">Traces capteurs et trajectoire</span></div>
       <div class="plots-grid">
     <details class="plot-card" open>
-      <summary><h3>Altitude</h3></summary>
+      <summary><h3><span class="lang-en">Altitude</span><span class="lang-fr">Altitude</span></h3></summary>
       <div class="plot-body">
         <img src="plot/plot_altitude_dual.png" alt="Altitude" loading="lazy">
-        <p class="caption">BMP180 (blue) assumes a standard atmosphere and diverges above ~9 km; GPS (orange) is <abbr title="Mean sea-level pressure (altimeter setting)">QNH</abbr>-independent and accurate end-to-end. Background bands: ASCENT (green), BURST (orange), DESCENT (blue). The slope at any point is the vertical rate — see the Ascent / descent rate plot for a smoothed numeric view.</p>
+        <p class="caption"><span class="lang-en">BMP180 (blue) assumes a standard atmosphere and diverges above ~9 km; GPS (orange) is <abbr title="Mean sea-level pressure (altimeter setting)">QNH</abbr>-independent and accurate end-to-end. Background bands: ASCENT (green), BURST (orange), DESCENT (blue). The slope at any point is the vertical rate — see the Ascent / descent rate plot for a smoothed numeric view.</span><span class="lang-fr">Le BMP180 (bleu) suppose une atmosphère standard et diverge au-dessus d'environ 9 km ; le GPS (orange) est indépendant du <abbr title="Pression moyenne au niveau de la mer (calage altimétrique)">QNH</abbr> et précis de bout en bout. Bandes de fond : ASCENT (vert), BURST (orange), DESCENT (bleu). La pente en tout point est la vitesse verticale — voir le graphe de vitesse de montée / descente pour une vue lissée.</span></p>
       </div>
     </details>
     <details class="plot-card" open>
-      <summary><h3>Ascent / descent rate</h3></summary>
+      <summary><h3><span class="lang-en">Ascent / descent rate</span><span class="lang-fr">Vitesse de montée / descente</span></h3></summary>
       <div class="plot-body">
         <img src="plot/plot_ascent_rate.png" alt="Ascent / descent rate" loading="lazy">
-        <p class="caption">Vertical speed smoothed with a 60 s rolling median. Typical <abbr title="High-Altitude Balloon">HAB</abbr>: steady 5-7 m/s ascent, sharp dive to 20-30 m/s right after burst (parachute barely catches in near-vacuum), then gradual slowing as the chute bites in thicker air.</p>
+        <p class="caption"><span class="lang-en">Vertical speed smoothed with a 60 s rolling median. Typical <abbr title="High-Altitude Balloon">HAB</abbr>: steady 5-7 m/s ascent, sharp dive to 20-30 m/s right after burst (parachute barely catches in near-vacuum), then gradual slowing as the chute bites in thicker air.</span><span class="lang-fr">Vitesse verticale lissée par une médiane glissante de 60 s. <abbr title="Ballon stratosphérique (High-Altitude Balloon)">HAB</abbr> typique : montée régulière à 5-7 m/s, chute brutale à 20-30 m/s juste après l'éclatement (le parachute accroche à peine dans le quasi-vide), puis ralentissement progressif à mesure que la voile mord dans l'air plus dense.</span></p>
       </div>
     </details>
     <details class="plot-card" open>
-      <summary><h3>Temperature</h3></summary>
+      <summary><h3><span class="lang-en">Temperature</span><span class="lang-fr">Température</span></h3></summary>
       <div class="plot-body">
         <img src="plot/plot_temperature.png" alt="Temperature" loading="lazy">
-        <p class="caption">Inside-payload temperature. Follows the ambient profile: warm near the ground, cold trough through the tropopause (−40 to −55 °C around 10-15 km), slight warming climbing into the stratosphere.</p>
+        <p class="caption"><span class="lang-en">Inside-payload temperature. Follows the ambient profile: warm near the ground, cold trough through the tropopause (−40 to −55 °C around 10-15 km), slight warming climbing into the stratosphere.</span><span class="lang-fr">Température à l'intérieur de la charge utile. Suit le profil ambiant : douce près du sol, creux froid à travers la tropopause (−40 à −55 °C vers 10-15 km), léger réchauffement en montant dans la stratosphère.</span></p>
       </div>
     </details>
     <details class="plot-card" open>
-      <summary><h3>Pressure</h3></summary>
+      <summary><h3><span class="lang-en">Pressure</span><span class="lang-fr">Pression</span></h3></summary>
       <div class="plot-body">
         <img src="plot/plot_pressure.png" alt="Pressure" loading="lazy">
-        <p class="caption">Raw BMP180 pressure. Falls roughly exponentially — half of sea-level at ~5.5 km, 10 % at 16 km, below 1 % above 30 km. BMP180's range runs out around 9 km, so values above are noisy and shouldn't be trusted.</p>
+        <p class="caption"><span class="lang-en">Raw BMP180 pressure. Falls roughly exponentially — half of sea-level at ~5.5 km, 10 % at 16 km, below 1 % above 30 km. BMP180's range runs out around 9 km, so values above are noisy and shouldn't be trusted.</span><span class="lang-fr">Pression brute du BMP180. Décroît à peu près exponentiellement — moitié de celle au niveau de la mer à ~5,5 km, 10 % à 16 km, moins de 1 % au-dessus de 30 km. La plage du BMP180 s'épuise vers 9 km : les valeurs au-delà sont bruitées et ne sont pas fiables.</span></p>
       </div>
     </details>
     <details class="plot-card" open>
-      <summary><h3>Ground track</h3></summary>
+      <summary><h3><span class="lang-en">Ground track</span><span class="lang-fr">Trajectoire au sol</span></h3></summary>
       <div class="plot-body">
         <img src="plot/plot_track_satellite.png" alt="Ground track" loading="lazy">
-        <p class="caption">Flight path on <abbr title="Environmental Systems Research Institute (ArcGIS tile provider)">ESRI</abbr> World Imagery, coloured by altitude (km). Green = launch, red = last fix. Top-5 nearby cities labelled for scale; the altitude colourbar is on the right.</p>
+        <p class="caption"><span class="lang-en">Flight path on <abbr title="Environmental Systems Research Institute (ArcGIS tile provider)">ESRI</abbr> World Imagery, coloured by altitude (km). Green = launch, red = last fix. Top-5 nearby cities labelled for scale; the altitude colourbar is on the right.</span><span class="lang-fr">Trajectoire sur l'imagerie <abbr title="Environmental Systems Research Institute (fournisseur de tuiles ArcGIS)">ESRI</abbr> World Imagery, colorée par altitude (km). Vert = lancement, rouge = dernier fix. Les 5 villes les plus proches sont étiquetées pour l'échelle ; la barre de couleur d'altitude est à droite.</span></p>
       </div>
     </details>
     <details class="plot-card" open>
-      <summary><h3>3D trajectory over satellite floor</h3></summary>
+      <summary><h3><span class="lang-en">3D trajectory over satellite floor</span><span class="lang-fr">Trajectoire 3D sur fond satellite</span></h3></summary>
       <div class="plot-body">
         <img src="plot/plot_track_3d.gif" alt="3D trajectory over satellite floor" loading="lazy">
-        <p class="caption">3D flight path with <abbr title="Environmental Systems Research Institute (ArcGIS tile provider)">ESRI</abbr> imagery as the ground plane. XY = km east/north from first fix, Z = altitude (km). Animation sweeps 90° and back every 4 s; a static PNG and a 10 s 60 fps MP4 sit alongside.</p>
+        <p class="caption"><span class="lang-en">3D flight path with <abbr title="Environmental Systems Research Institute (ArcGIS tile provider)">ESRI</abbr> imagery as the ground plane. XY = km east/north from first fix, Z = altitude (km). Animation sweeps 90° and back every 4 s; a static PNG and a 10 s 60 fps MP4 sit alongside.</span><span class="lang-fr">Trajectoire 3D avec l'imagerie <abbr title="Environmental Systems Research Institute (fournisseur de tuiles ArcGIS)">ESRI</abbr> comme plan de sol. XY = km est/nord depuis le premier fix, Z = altitude (km). L'animation balaie 90° aller-retour en 4 s ; un PNG statique et une MP4 de 10 s à 60 images/s sont disponibles à côté.</span></p>
       </div>
     </details>
     <details class="plot-card" open>
-      <summary><h3>GPS satellites</h3></summary>
+      <summary><h3><span class="lang-en">GPS satellites</span><span class="lang-fr">Satellites GPS</span></h3></summary>
       <div class="plot-body">
         <img src="plot/plot_gps_health.png" alt="GPS satellites" loading="lazy">
-        <p class="caption">Satellites used in the position solution. 6+ is the sketch's 'good fix' threshold; more generally means tighter accuracy. Sudden drops to 0 point to antenna shadowing, <abbr title="Electromagnetic Interference">EMI</abbr>, or fast rotation masking the sky.</p>
+        <p class="caption"><span class="lang-en">Satellites used in the position solution. 6+ is the sketch's 'good fix' threshold; more generally means tighter accuracy. Sudden drops to 0 point to antenna shadowing, <abbr title="Electromagnetic Interference">EMI</abbr>, or fast rotation masking the sky.</span><span class="lang-fr">Satellites utilisés dans la solution de position. 6+ est le seuil « bon fix » du programme ; plus il y en a, plus la précision est serrée. Des chutes soudaines à 0 indiquent un masquage de l'antenne, des interférences électromagnétiques (<abbr title="Interférences électromagnétiques">EMI</abbr>) ou une rotation rapide qui masque le ciel.</span></p>
       </div>
     </details>
     <details class="plot-card">
-      <summary><h3>Sample interval</h3></summary>
+      <summary><h3><span class="lang-en">Sample interval</span><span class="lang-fr">Intervalle d'échantillonnage</span></h3></summary>
       <div class="plot-body">
         <img src="plot/plot_sample_rate.png" alt="Sample interval" loading="lazy">
-        <p class="caption">Time between consecutive CSV rows. Target is 1000 ms. Small spikes = SD write latency; sustained drift = SoftwareSerial buffer pressure. Values above ~1050 ms mean a sample was delayed but not dropped.</p>
+        <p class="caption"><span class="lang-en">Time between consecutive CSV rows. Target is 1000 ms. Small spikes = SD write latency; sustained drift = SoftwareSerial buffer pressure. Values above ~1050 ms mean a sample was delayed but not dropped.</span><span class="lang-fr">Temps entre deux lignes CSV consécutives. La cible est 1000 ms. Petits pics = latence d'écriture SD ; dérive soutenue = pression sur le tampon SoftwareSerial. Des valeurs au-dessus d'environ 1050 ms signifient qu'un échantillon a été retardé mais pas perdu.</span></p>
       </div>
     </details>
     <details class="plot-card">
-      <summary><h3>State machine progression</h3></summary>
+      <summary><h3><span class="lang-en">State machine progression</span><span class="lang-fr">Progression de la machine à états</span></h3></summary>
       <div class="plot-body">
         <img src="plot/plot_state.png" alt="State machine progression" loading="lazy">
-        <p class="caption">Flight state 0-12. 0 = WAITING, 1 = ARMED_GROUND, 2-7 = ASCENT bands, 8 = BURST, 9-11 = DESCENT bands, 12 = LANDED. Smooth stairway = clean mission; sawtooth = jumper toggles or burst-detection oscillation.</p>
+        <p class="caption"><span class="lang-en">Flight state 0-12. 0 = WAITING, 1 = ARMED_GROUND, 2-7 = ASCENT bands, 8 = BURST, 9-11 = DESCENT bands, 12 = LANDED. Smooth stairway = clean mission; sawtooth = jumper toggles or burst-detection oscillation.</span><span class="lang-fr">État de vol 0-12. 0 = WAITING (attente), 1 = ARMED_GROUND (armé au sol), 2-7 = bandes ASCENT (montée), 8 = BURST (éclatement), 9-11 = bandes DESCENT (descente), 12 = LANDED (atterri). Escalier régulier = mission propre ; dents de scie = bascules du cavalier ou oscillation de la détection d'éclatement.</span></p>
       </div>
     </details>
       </div>
     </section>
 
     <section class="card">
-      <h2>Detail</h2>
-      <div class="card-subtitle">Full run metrics</div>
+      <h2><span class="lang-en">Detail</span><span class="lang-fr">Détails</span></h2>
+      <div class="card-subtitle"><span class="lang-en">Full run metrics</span><span class="lang-fr">Métriques complètes du vol</span></div>
       <table class="metrics">
-      <tr><th>Samples</th><td>10,014</td></tr>
-      <tr><th>Duration</th><td>10022.0 s (167.0 min)</td></tr>
-      <tr><th>Sample ID range</th><td>1 → 10,014</td></tr>
-      <tr><th>Dropped samples</th><td>0</td></tr>
-      <tr><th>Altitude range (gps_alt_m)</th><td>139.2 → 32422.4 m</td></tr>
-      <tr><th>Temperature range</th><td>-19.2 → 23.7 °C</td></tr>
-      <tr><th>Pressure range</th><td>12.8 → 1014.3 hPa</td></tr>
-      <tr><th>Time to first GPS fix</th><td>0 s</td></tr>
-      <tr><th>GPS fixes</th><td>10,014 / 10,014 rows</td></tr>
-      <tr><th>Max sats</th><td>18</td></tr>
-      <tr><th>Sample Δt median</th><td>1001 ms</td></tr>
-      <tr><th>Sample Δt max</th><td>1016 ms</td></tr>
-      <tr><th>States reached</th><td>1 ARMED_GROUND, 2 ASCENT_1, 3 ASCENT_2, 4 ASCENT_3, 5 ASCENT_4, 6 ASCENT_5, 7 ASCENT_6, 8 BURST, 9 DESCENT_1, 10 DESCENT_2</td></tr>
-      <tr><th>Photos triggered</th><td>693</td></tr>
-      <tr class="section"><th colspan="2">Launch conditions</th></tr>
-      <tr><th>Launch location</th><td>49.2326 °N, 0.0935 °E</td></tr>
-      <tr><th>Launch time (<abbr title="Coordinated Universal Time">UTC</abbr>)</th><td>2026-10-04 08:12</td></tr>
-      <tr><th>Weather</th><td>clear sky</td></tr>
-      <tr><th>Air temperature (2 m <abbr title="Above Ground Level">AGL</abbr>)</th><td>12.5 °C</td></tr>
-      <tr><th>Relative humidity (<abbr title="Relative humidity">RH</abbr>)</th><td>86 %</td></tr>
-      <tr><th>Surface pressure</th><td>1011.2 hPa</td></tr>
-      <tr><th>Wind (10 m <abbr title="Above Ground Level">AGL</abbr>)</th><td>3.6 km/h from <abbr title="Northeast">NE</abbr> (37°)</td></tr>
-      <tr><th>Cloud cover</th><td>0 %</td></tr>
-      <tr><th>Precipitation (1 h)</th><td>0.0 mm</td></tr>
+      <tr><th><span class="lang-en">Samples</span><span class="lang-fr">Échantillons</span></th><td>10,014</td></tr>
+      <tr><th><span class="lang-en">Duration</span><span class="lang-fr">Durée</span></th><td>10022.0 s (167.0 min)</td></tr>
+      <tr><th><span class="lang-en">Sample ID range</span><span class="lang-fr">Plage des ID d'échantillons</span></th><td>1 → 10,014</td></tr>
+      <tr><th><span class="lang-en">Dropped samples</span><span class="lang-fr">Échantillons perdus</span></th><td>0</td></tr>
+      <tr><th><span class="lang-en">Altitude range (gps_alt_m)</span><span class="lang-fr">Plage d'altitude (gps_alt_m)</span></th><td>139.2 → 32422.4 m</td></tr>
+      <tr><th><span class="lang-en">Temperature range</span><span class="lang-fr">Plage de température</span></th><td>-19.2 → 23.7 °C</td></tr>
+      <tr><th><span class="lang-en">Pressure range</span><span class="lang-fr">Plage de pression</span></th><td>12.8 → 1014.3 hPa</td></tr>
+      <tr><th><span class="lang-en">Time to first GPS fix</span><span class="lang-fr">Temps avant le premier fix GPS</span></th><td><span class="lang-en">0 s</span><span class="lang-fr">0 s</span></td></tr>
+      <tr><th><span class="lang-en">GPS fixes</span><span class="lang-fr">Fix GPS</span></th><td><span class="lang-en">10,014 / 10,014 rows</span><span class="lang-fr">10,014 / 10,014 lignes</span></td></tr>
+      <tr><th><span class="lang-en">Max sats</span><span class="lang-fr">Sats max</span></th><td>18</td></tr>
+      <tr><th><span class="lang-en">Sample Δt median</span><span class="lang-fr">Médiane Δt échantillon</span></th><td>1001 ms</td></tr>
+      <tr><th><span class="lang-en">Sample Δt max</span><span class="lang-fr">Max Δt échantillon</span></th><td>1016 ms</td></tr>
+      <tr><th><span class="lang-en">States reached</span><span class="lang-fr">États atteints</span></th><td>1 ARMED_GROUND, 2 ASCENT_1, 3 ASCENT_2, 4 ASCENT_3, 5 ASCENT_4, 6 ASCENT_5, 7 ASCENT_6, 8 BURST, 9 DESCENT_1, 10 DESCENT_2</td></tr>
+      <tr><th><span class="lang-en">Photos triggered</span><span class="lang-fr">Photos déclenchées</span></th><td>693</td></tr>
+      <tr class="section"><th colspan="2"><span class="lang-en">Launch conditions</span><span class="lang-fr">Conditions de lancement</span></th></tr>
+      <tr><th><span class="lang-en">Launch location</span><span class="lang-fr">Lieu de lancement</span></th><td>49.2326 °N, 0.0935 °E</td></tr>
+      <tr><th><span class="lang-en">Launch time (<abbr title="Coordinated Universal Time">UTC</abbr>)</span><span class="lang-fr">Heure de lancement (<abbr title="Temps universel coordonné">UTC</abbr>)</span></th><td>2026-10-04 08:12</td></tr>
+      <tr><th><span class="lang-en">Weather</span><span class="lang-fr">Météo</span></th><td><span class="lang-en">clear sky</span><span class="lang-fr">ciel dégagé</span></td></tr>
+      <tr><th><span class="lang-en">Air temperature (2 m <abbr title="Above Ground Level">AGL</abbr>)</span><span class="lang-fr">Température de l'air (2 m <abbr title="Au-dessus du niveau du sol">AGL</abbr>)</span></th><td>13.3 °C</td></tr>
+      <tr><th><span class="lang-en">Relative humidity (<abbr title="Relative humidity">RH</abbr>)</span><span class="lang-fr">Humidité relative (<abbr title="Humidité relative">RH</abbr>)</span></th><td>81 %</td></tr>
+      <tr><th><span class="lang-en">Surface pressure</span><span class="lang-fr">Pression au sol</span></th><td>1011.1 hPa</td></tr>
+      <tr><th><span class="lang-en">Wind (10 m <abbr title="Above Ground Level">AGL</abbr>)</span><span class="lang-fr">Vent (10 m <abbr title="Au-dessus du niveau du sol">AGL</abbr>)</span></th><td><span class="lang-en">7.7 km/h from <abbr title="Northeast">NE</abbr> (41°)</span><span class="lang-fr">7.7 km/h de <abbr title="Nord-est">NE</abbr> (41°)</span></td></tr>
+      <tr><th><span class="lang-en">Cloud cover</span><span class="lang-fr">Couverture nuageuse</span></th><td>0 %</td></tr>
+      <tr><th><span class="lang-en">Precipitation (1 h)</span><span class="lang-fr">Précipitations (1 h)</span></th><td>0.0 mm</td></tr>
       </table>
     </section>
 
-    <footer>Generated by <code>analyze.py</code> · balloon_datalog</footer>
+    <footer><span class="lang-en">Generated by</span><span class="lang-fr">Généré par</span> <code>analyze.py</code> · balloon_datalog</footer>
   </div>
 
   <div id="img-modal" role="dialog" aria-modal="true" aria-label="Expanded image">
@@ -508,9 +546,38 @@
   </div>
   <script>
     (function () {
+      var root = document.documentElement;
       var modal = document.getElementById('img-modal');
       var modalImg = document.getElementById('img-modal-img');
       var closeBtn = document.getElementById('img-modal-close');
+      var langBtns = document.querySelectorAll('.lang-switch button');
+      var modalLabels = {
+        en: { dialog: 'Expanded image', close: 'Close' },
+        fr: { dialog: 'Image agrandie', close: 'Fermer' }
+      };
+      function setLang(lang, save) {
+        root.setAttribute('lang', lang);
+        langBtns.forEach(function (b) {
+          b.classList.toggle('active', b.dataset.lang === lang);
+        });
+        var titles = {
+          en: root.dataset.titleEn,
+          fr: root.dataset.titleFr
+        };
+        if (titles[lang]) document.title = titles[lang];
+        modal.setAttribute('aria-label', modalLabels[lang].dialog);
+        closeBtn.setAttribute('aria-label', modalLabels[lang].close);
+        if (save) {
+          try { localStorage.setItem('hab-report-lang', lang); } catch (e) {}
+        }
+      }
+      langBtns.forEach(function (b) {
+        b.addEventListener('click', function () { setLang(b.dataset.lang, true); });
+      });
+      var saved = null;
+      try { saved = localStorage.getItem('hab-report-lang'); } catch (e) {}
+      setLang(saved === 'fr' ? 'fr' : 'en', false);
+
       function open(src, alt) {
         modalImg.src = src;
         modalImg.alt = alt || '';
